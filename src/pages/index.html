@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JoySquad Texas | Photo Booth & Event Experiences</title>
+  <meta name="description" content="JoySquad Texas — Premium photo booths, 360 video booths & event experiences for corporate events, weddings & activations across the Lone Star State." />
+  <meta property="og:title" content="JoySquad Texas | Photo Booth & Event Experiences" />
+  <meta property="og:description" content="Premium photo booths, 360 video booths & event experiences across Texas." />
+  <meta property="og:url" content="https://joysquad-texas.com" />
+  <link rel="canonical" href="https://joysquad-texas.com" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --yellow:   #FFD600;
+      --orange:   #FF5C00;
+      --black:    #080808;
+      --offwhite: #F2EDE4;
+      --gray:     #111111;
+      --gray2:    #1A1A1A;
+      --mid:      rgba(242,237,228,0.45);
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--black); color: var(--offwhite); font-family: 'DM Sans', sans-serif; overflow-x: hidden; cursor: none; }
+    .cursor { position: fixed; width: 10px; height: 10px; background: var(--yellow); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); transition: width .2s, height .2s, background .2s; mix-blend-mode: difference; }
+    .cursor.big { width: 44px; height: 44px; background: var(--orange); }
+    body::after { content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 1000; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E"); opacity: 0.03; }
+
+    /* NAV */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 3rem; background: linear-gradient(to bottom, rgba(8,8,8,0.97), transparent); animation: fadeDown .7s ease both; }
+    .nav-logo { font-family: 'Bebas Neue', cursive; font-size: 1.6rem; letter-spacing: 0.08em; color: var(--offwhite); text-decoration: none; }
+    .nav-logo span { color: var(--yellow); }
+    .nav-links { display: flex; gap: 2rem; align-items: center; }
+    .nav-link { font-size: .75rem; font-weight: 500; letter-spacing: .15em; text-transform: uppercase; color: var(--mid); text-decoration: none; transition: color .2s; }
+    .nav-link:hover { color: var(--yellow); }
+    .nav-cta { font-size: .75rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--black); background: var(--yellow); padding: .5em 1.4em; border-radius: 2px; text-decoration: none; transition: background .2s, transform .2s; }
+    .nav-cta:hover { background: var(--orange); transform: translateY(-1px); }
+
+    /* HERO */
+    .hero { position: relative; min-height: 100vh; display: flex; flex-direction: column; justify-content: flex-end; padding: 0 3rem 5rem; overflow: hidden; }
+    .hero-bg { position: absolute; inset: 0; background: radial-gradient(ellipse 80% 60% at 70% 40%, rgba(255,92,0,0.16) 0%, transparent 60%), radial-gradient(ellipse 50% 80% at 15% 80%, rgba(255,214,0,0.08) 0%, transparent 50%), var(--black); animation: bgPulse 8s ease-in-out infinite alternate; }
+    @keyframes bgPulse { 0%{opacity:1} 100%{opacity:.75} }
+    .hero-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(242,237,228,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(242,237,228,0.025) 1px, transparent 1px); background-size: 80px 80px; }
+    .hero-star { position: absolute; top: 50%; right: 6%; transform: translateY(-50%); font-size: clamp(16rem,32vw,40rem); color: var(--offwhite); opacity: 0.022; pointer-events: none; user-select: none; animation: starFloat 7s ease-in-out infinite; }
+    @keyframes starFloat { 0%,100%{transform:translateY(-50%) rotate(0deg)} 50%{transform:translateY(-53%) rotate(4deg)} }
+    .hero-content { position: relative; z-index: 2; max-width: 1000px; }
+    .hero-eyebrow { display: inline-flex; align-items: center; gap: .75rem; font-size: .72rem; font-weight: 600; letter-spacing: .25em; text-transform: uppercase; color: var(--yellow); margin-bottom: 1.5rem; opacity: 0; animation: fadeUp .7s .2s ease forwards; }
+    .hero-eyebrow::before { content:''; display:block; width:2rem; height:1px; background:var(--yellow); }
+    .hero-title { font-family: 'Bebas Neue', cursive; font-size: clamp(4.5rem,15vw,15rem); line-height: .88; letter-spacing: -.01em; margin-bottom: 2rem; }
+    .hero-title .l1 { display:block; opacity:0; animation: fadeUp .8s .35s ease forwards; }
+    .hero-title .l2 { display:block; background: linear-gradient(90deg, var(--yellow) 0%, var(--orange) 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; opacity:0; animation: fadeUp .8s .5s ease forwards; }
+    .hero-sub { font-size: clamp(.95rem,2vw,1.2rem); font-weight: 300; color: var(--mid); max-width: 500px; line-height: 1.75; margin-bottom: 3rem; opacity:0; animation: fadeUp .8s .65s ease forwards; }
+    .hero-cta { display:flex; flex-wrap:wrap; gap:1rem; align-items:center; opacity:0; animation: fadeUp .8s .8s ease forwards; }
+
+    /* BUTTONS */
+    .btn { display:inline-block; font-family:'DM Sans',sans-serif; font-size:.82rem; font-weight:600; letter-spacing:.12em; text-transform:uppercase; text-decoration:none; padding:.95em 2.4em; border-radius:2px; transition: transform .2s, box-shadow .2s; cursor:none; }
+    .btn-primary { background: linear-gradient(135deg, var(--yellow), var(--orange)); color: var(--black); box-shadow: 0 0 40px rgba(255,92,0,0.28); }
+    .btn-primary:hover { transform:translateY(-3px); box-shadow:0 8px 50px rgba(255,92,0,0.5); }
+    .btn-outline { border: 1px solid rgba(242,237,228,0.22); color: var(--offwhite); }
+    .btn-outline:hover { border-color:var(--yellow); color:var(--yellow); transform:translateY(-3px); }
+
+    /* MARQUEE */
+    .marquee-wrap { background: var(--yellow); overflow:hidden; padding:.9rem 0; }
+    .marquee-track { display:flex; gap:3rem; white-space:nowrap; animation: marquee 20s linear infinite; }
+    .marquee-item { font-family:'Bebas Neue',cursive; font-size:1rem; letter-spacing:.15em; color:var(--black); flex-shrink:0; }
+    .marquee-dot { color:var(--orange); margin-right:3rem; }
+    @keyframes marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+    /* CLIENTS */
+    .clients { background: var(--gray); padding: 5rem 3rem; }
+    .section-label { font-size:.7rem; font-weight:600; letter-spacing:.3em; text-transform:uppercase; color:var(--yellow); margin-bottom:3rem; }
+    .clients-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1px; }
+    .client-item { padding: 2rem 1.5rem; border: 1px solid rgba(242,237,228,0.05); display:flex; flex-direction:column; gap:.5rem; transition: background .3s; }
+    .client-item:hover { background: rgba(255,214,0,0.04); }
+    .client-tag { font-size:.62rem; font-weight:600; letter-spacing:.2em; text-transform:uppercase; }
+    .client-tag.dallas { color: var(--orange); }
+    .client-tag.national { color: var(--yellow); opacity:.7; }
+    .client-name { font-family:'Bebas Neue',cursive; font-size:1.6rem; letter-spacing:.04em; color:var(--offwhite); line-height:1; }
+
+    /* SERVICES */
+    .services { background: var(--black); padding: 5rem 3rem; }
+    .services-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:2px; }
+    .service-item { padding:2.5rem 1.5rem; border-left:1px solid rgba(242,237,228,0.06); transition: background .3s; }
+    .service-item:hover { background: rgba(255,214,0,0.03); }
+    .service-icon { font-size:1.8rem; margin-bottom:1rem; display:block; }
+    .service-name { font-family:'Bebas Neue',cursive; font-size:1.45rem; letter-spacing:.04em; margin-bottom:.5rem; }
+    .service-desc { font-size:.82rem; font-weight:300; color:var(--mid); line-height:1.65; }
+
+    /* GALLERY */
+    .gallery { background: var(--gray2); padding: 5rem 3rem; }
+    .gallery-grid { display:grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: 280px 180px; gap: 4px; margin-top: 2.5rem; }
+    .gallery-item { position:relative; overflow:hidden; background: var(--gray); display:flex; align-items:center; justify-content:center; }
+    .gallery-item:first-child { grid-column: span 2; }
+    .gallery-placeholder { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:.75rem; padding:2rem; text-align:center; }
+    .gallery-placeholder .icon { font-size:2.5rem; opacity:.3; }
+    .gallery-placeholder p { font-size:.72rem; font-weight:500; letter-spacing:.15em; text-transform:uppercase; color:var(--mid); }
+    .gallery-label { position:absolute; bottom:1rem; left:1rem; font-size:.65rem; font-weight:600; letter-spacing:.2em; text-transform:uppercase; color:var(--yellow); background: rgba(8,8,8,0.7); padding:.3em .8em; border-radius:2px; }
+    .gallery-cta { margin-top:2rem; display:flex; align-items:center; gap:1rem; flex-wrap:wrap; }
+    .gallery-note { font-size:.8rem; font-weight:300; color:var(--mid); font-style:italic; }
+
+    /* BOOKING */
+    .booking { background: var(--black); padding: 6rem 3rem; }
+    .booking-inner { max-width:960px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:5rem; align-items:start; }
+    .booking-title { font-family:'Bebas Neue',cursive; font-size:clamp(2.8rem,6vw,5.5rem); line-height:.95; letter-spacing:.02em; margin-bottom:1.5rem; }
+    .booking-title span { color:var(--orange); }
+    .booking-body { font-size:.9rem; font-weight:300; color:var(--mid); line-height:1.8; margin-bottom:2rem; }
+    .booking-badges { display:flex; flex-wrap:wrap; gap:.75rem; }
+    .badge { font-size:.62rem; font-weight:600; letter-spacing:.15em; text-transform:uppercase; border:1px solid rgba(242,237,228,0.12); padding:.35em .9em; border-radius:2px; color:var(--mid); }
+    .form { display:flex; flex-direction:column; gap:1.25rem; }
+    .form-row { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+    .field { display:flex; flex-direction:column; gap:.4rem; }
+    .field label { font-size:.65rem; font-weight:600; letter-spacing:.18em; text-transform:uppercase; color:var(--mid); }
+    .field input, .field select, .field textarea { background: var(--gray2); border: 1px solid rgba(242,237,228,0.1); color: var(--offwhite); font-family:'DM Sans',sans-serif; font-size:.9rem; padding:.85em 1em; border-radius:2px; outline:none; transition: border-color .2s; -webkit-appearance:none; }
+    .field input:focus, .field select:focus, .field textarea:focus { border-color: var(--yellow); }
+    .field textarea { resize:vertical; min-height:100px; }
+    .field select option { background: var(--gray2); }
+    .form-submit { display:flex; align-items:center; gap:1rem; flex-wrap:wrap; margin-top:.5rem; }
+    .form-note { font-size:.75rem; color:var(--mid); font-weight:300; }
+
+    /* CONTACT */
+    .contact-strip { background: var(--gray); padding: 4rem 3rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:2rem; }
+    .contact-details { display:flex; flex-direction:column; gap:.75rem; }
+    .contact-detail { font-size:.82rem; font-weight:500; letter-spacing:.08em; text-transform:uppercase; color:var(--mid); display:flex; align-items:center; gap:.75rem; }
+    .contact-detail a { color:var(--offwhite); text-decoration:none; border-bottom:1px solid rgba(242,237,228,0.15); transition: color .2s, border-color .2s; }
+    .contact-detail a:hover { color:var(--yellow); border-color:var(--yellow); }
+    .contact-right { display:flex; flex-direction:column; gap:.75rem; align-items:flex-end; }
+    .contact-right p { font-size:.72rem; font-weight:500; letter-spacing:.15em; text-transform:uppercase; color:var(--mid); }
+
+    /* FOOTER */
+    footer { border-top:1px solid rgba(242,237,228,0.07); padding:2rem 3rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; }
+    .footer-copy { font-size:.75rem; color:rgba(242,237,228,0.22); letter-spacing:.04em; }
+    .footer-right { display:flex; gap:2rem; align-items:center; flex-wrap:wrap; }
+    .footer-link { font-size:.75rem; color:rgba(242,237,228,0.22); text-decoration:none; letter-spacing:.05em; transition:color .2s; }
+    .footer-link:hover { color:var(--yellow); }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp { from{opacity:0;transform:translateY(28px)} to{opacity:1;transform:translateY(0)} }
+    @keyframes fadeDown { from{opacity:0;transform:translateY(-18px)} to{opacity:1;transform:translateY(0)} }
+
+    /* RESPONSIVE */
+    @media (max-width:900px) {
+      nav { padding:1.25rem 1.5rem; }
+      .nav-link { display:none; }
+      .hero,.clients,.services,.gallery,.booking,.contact-strip,footer { padding-left:1.5rem; padding-right:1.5rem; }
+      .hero { padding-bottom:4rem; }
+      .hero-star { font-size:12rem; }
+      .booking-inner { grid-template-columns:1fr; gap:3rem; }
+      .gallery-grid { grid-template-columns:1fr 1fr; grid-template-rows:auto; }
+      .gallery-item:first-child { grid-column:span 2; }
+      .contact-strip { flex-direction:column; align-items:flex-start; }
+      .contact-right { align-items:flex-start; }
+    }
+    @media (max-width:600px) {
+      .form-row { grid-template-columns:1fr; }
+      .gallery-grid { grid-template-columns:1fr; }
+      .gallery-item:first-child { grid-column:span 1; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="/" class="nav-logo">Joy<span>Squad</span>&nbsp;<span style="color:var(--mid);font-size:.85rem;font-family:'DM Sans',sans-serif;font-weight:300;letter-spacing:.05em;">Texas</span></a>
+  <div class="nav-links">
+    <a href="#services" class="nav-link">Services</a>
+    <a href="#gallery" class="nav-link">Gallery</a>
+    <a href="#booking" class="nav-link">Book</a>
+    <a href="https://joysquad.com" target="_blank" rel="noopener" class="nav-link">HQ ↗</a>
+    <a href="#booking" class="nav-cta">Get a Quote</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-star">★</div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Now serving the Lone Star State</p>
+    <h1 class="hero-title">
+      <span class="l1">Capture the</span>
+      <span class="l2">Joy.</span>
+    </h1>
+    <p class="hero-sub">Premium photo booths, 360 video experiences &amp; event activations — brought to Texas by the team behind JoySquad Las Vegas.</p>
+    <div class="hero-cta">
+      <a href="#booking" class="btn btn-primary">Book Your Event</a>
+      <a href="#services" class="btn btn-outline">See What We Do</a>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span class="marquee-item">Photo Booths <span class="marquee-dot">✦</span></span>
+    <span class="marquee-item">360 Video Booths <span class="marquee-dot">✦</span></span>
+    <span class="marquee-item">Corporate Events <span class="marquee-dot">✦</span></span>
+    <span class="marquee-item">Weddings <span class="marquee-dot">✦</span></span>
+    <span class="marquee-item">Brand Activations <span class="marquee-dot">✦</span></span>
+    <span class="marquee-item">Roaming Photography <span class="marquee-dot">✦</span></span>
+    <span class="marquee-item">AI Photo Experiences <span class="marquee-dot">✦</span></span>
+    <span class="marquee-item">The Knot Best of Weddings <span class="marquee-dot">✦</span></span>
+    <span class="marquee-item">Photo Booths <span class="marquee-dot">✦</span></span>
+    <span class="marquee-item">360 Video Booths <span class="marquee-dot">✦</span></span>
+    <span class="marquee-item">Corporate Events <span class="marquee-dot">✦</span></span>
+    <span class="marquee-item">Weddings <span class="marquee-dot">✦</span></span>
+    <span class="marquee-item">Brand Activations <span class="marquee-dot">✦</span></span>
+    <span class="marquee-item">Roaming Photography <span class="marquee-dot">✦</span></span>
+    <span class="marquee-item">AI Photo Experiences <span class="marquee-dot">✦</span></span>
+    <span class="marquee-item">The Knot Best of Weddings <span class="marquee-dot">✦</span></span>
+  </div>
+</div>
+
+<!-- CLIENTS -->
+<section class="clients">
+  <p class="section-label">Trusted by</p>
+  <div class="clients-grid">
+    <div class="client-item">
+      <span class="client-tag dallas">★ Dallas</span>
+      <p class="client-name">Meta</p>
+    </div>
+    <div class="client-item">
+      <span class="client-tag dallas">★ Dallas</span>
+      <p class="client-name">WFAA ABC</p>
+    </div>
+    <div class="client-item">
+      <span class="client-tag dallas">★ Dallas</span>
+      <p class="client-name">American Airlines</p>
+    </div>
+    <div class="client-item">
+      <span class="client-tag national">Nationwide</span>
+      <p class="client-name">Coca-Cola</p>
+    </div>
+    <div class="client-item">
+      <span class="client-tag national">Nationwide</span>
+      <p class="client-name">Mercedes-Benz</p>
+    </div>
+    <div class="client-item">
+      <span class="client-tag national">Nationwide</span>
+      <p class="client-name">Gatorade</p>
+    </div>
+    <div class="client-item">
+      <span class="client-tag national">Nationwide</span>
+      <p class="client-name">Kohler</p>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <p class="section-label">What we bring to Texas</p>
+  <div class="services-grid">
+    <div class="service-item">
+      <span class="service-icon">📸</span>
+      <p class="service-name">Photo Booths</p>
+      <p class="service-desc">DSLR-quality open-air &amp; enclosed booths with custom branding, props &amp; instant printing.</p>
+    </div>
+    <div class="service-item">
+      <span class="service-icon">🌀</span>
+      <p class="service-name">360 Video Booth</p>
+      <p class="service-desc">Immersive slow-motion 360° video — the #1 selling experience worldwide. Instantly shareable.</p>
+    </div>
+    <div class="service-item">
+      <span class="service-icon">✨</span>
+      <p class="service-name">Glam Beauty Cam</p>
+      <p class="service-desc">Hollywood beauty filter mini-shoots with custom GIF animations. Red carpet energy for any event.</p>
+    </div>
+    <div class="service-item">
+      <span class="service-icon">🤖</span>
+      <p class="service-name">AI Photo Experiences</p>
+      <p class="service-desc">Cutting-edge AI-integrated photography — Vikings, astronauts, futuristic themes &amp; beyond.</p>
+    </div>
+    <div class="service-item">
+      <span class="service-icon">🎯</span>
+      <p class="service-name">Brand Activations</p>
+      <p class="service-desc">Custom-built experiences for trade shows, product launches &amp; corporate events with social reach.</p>
+    </div>
+    <div class="service-item">
+      <span class="service-icon">🚶</span>
+      <p class="service-name">Roaming Photography</p>
+      <p class="service-desc">Our team moves through your event capturing candid, high-energy moments all night long.</p>
+    </div>
+    <div class="service-item">
+      <span class="service-icon">🎬</span>
+      <p class="service-name">Drone Photography</p>
+      <p class="service-desc">Licensed drone coverage to capture your venue and event from a breathtaking perspective.</p>
+    </div>
+    <div class="service-item">
+      <span class="service-icon">🎙️</span>
+      <p class="service-name">Full Studio</p>
+      <p class="service-desc">Headshots, podcast studio, audio mixing &amp; award-winning photography and videography.</p>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="gallery" id="gallery">
+  <p class="section-label">Our work</p>
+  <div class="gallery-grid">
+    <div class="gallery-item">
+      <div class="gallery-placeholder"><span class="icon">🎉</span><p>Corporate Event Gallery</p></div>
+      <span class="gallery-label">Corporate Events</span>
+    </div>
+    <div class="gallery-item">
+      <div class="gallery-placeholder"><span class="icon">💍</span><p>Wedding Gallery</p></div>
+      <span class="gallery-label">Weddings</span>
+    </div>
+    <div class="gallery-item">
+      <div class="gallery-placeholder"><span class="icon">🌀</span><p>360 Experiences</p></div>
+      <span class="gallery-label">360 Video</span>
+    </div>
+    <div class="gallery-item">
+      <div class="gallery-placeholder"><span class="icon">🤖</span><p>AI Photo Booth</p></div>
+      <span class="gallery-label">AI Experiences</span>
+    </div>
+    <div class="gallery-item">
+      <div class="gallery-placeholder"><span class="icon">🎯</span><p>Brand Activations</p></div>
+      <span class="gallery-label">Activations</span>
+    </div>
+  </div>
+  <div class="gallery-cta">
+    <a href="https://joysquad.com/gallery/" target="_blank" rel="noopener" class="btn btn-outline">View Full Gallery ↗</a>
+    <p class="gallery-note">Full portfolio at joysquad.com — thousands of activations nationwide</p>
+  </div>
+</section>
+
+<!-- BOOKING FORM -->
+<section class="booking" id="booking">
+  <div class="booking-inner">
+    <div>
+      <h2 class="booking-title">Let's make your event<br/><span>unforgettable.</span></h2>
+      <p class="booking-body">Serving Dallas, Fort Worth, Houston, Austin, San Antonio and all of Texas. Tell us about your event and we'll get back to you within 24 hours.</p>
+      <div class="booking-badges">
+        <span class="badge">The Knot Best of Weddings</span>
+        <span class="badge">50 States Luxury Wedding</span>
+        <span class="badge">Fortune 500 Clients</span>
+        <span class="badge">Since 2010</span>
+      </div>
+    </div>
+    <form class="form" onsubmit="handleSubmit(event)">
+      <div class="form-row">
+        <div class="field"><label for="fname">First Name</label><input type="text" id="fname" placeholder="First" required /></div>
+        <div class="field"><label for="lname">Last Name</label><input type="text" id="lname" placeholder="Last" required /></div>
+      </div>
+      <div class="field"><label for="email">Email</label><input type="email" id="email" placeholder="you@company.com" required /></div>
+      <div class="field"><label for="phone">Phone</label><input type="tel" id="phone" placeholder="(469) 000-0000" /></div>
+      <div class="form-row">
+        <div class="field">
+          <label for="event-type">Event Type</label>
+          <select id="event-type">
+            <option value="">Select...</option>
+            <option>Corporate Event</option>
+            <option>Wedding</option>
+            <option>Brand Activation</option>
+            <option>Trade Show</option>
+            <option>Birthday / Private Party</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="field"><label for="event-date">Event Date</label><input type="date" id="event-date" /></div>
+      </div>
+      <div class="field">
+        <label for="service">Service Interested In</label>
+        <select id="service">
+          <option value="">Select...</option>
+          <option>Photo Booth</option>
+          <option>360 Video Booth</option>
+          <option>Glam Beauty Cam</option>
+          <option>AI Photo Experience</option>
+          <option>Roaming Photography</option>
+          <option>Brand Activation</option>
+          <option>Multiple / Not Sure</option>
+        </select>
+      </div>
+      <div class="field"><label for="message">Tell us about your event</label><textarea id="message" placeholder="Venue, guest count, any special requirements..."></textarea></div>
+      <div class="form-submit">
+        <button type="submit" class="btn btn-primary" id="submit-btn">Send Inquiry</button>
+        <p class="form-note" id="form-note">We reply within 24 hours.</p>
+      </div>
+    </form>
+  </div>
+</section>
+
+<!-- CONTACT STRIP -->
+<section class="contact-strip">
+  <div class="contact-details">
+    <p class="section-label" style="margin-bottom:.5rem;">Contact</p>
+    <p class="contact-detail">📞 <a href="tel:4694441016">(469) 444-1016</a></p>
+    <p class="contact-detail">📧 <a href="mailto:eshields@joysquad.com">eshields@joysquad.com</a></p>
+    <p class="contact-detail">📍 Flower Mound, TX — Serving all of Texas</p>
+    <p class="contact-detail">🌐 <a href="https://joysquad.com" target="_blank" rel="noopener">joysquad.com</a></p>
+  </div>
+  <div class="contact-right">
+    <p>Find us on Google</p>
+    <a href="https://www.google.com/search?q=JoySquad+Texas+photo+booth+Flower+Mound" target="_blank" rel="noopener" class="btn btn-outline" style="font-size:.72rem;">Google Listing ↗</a>
+    <a href="https://joysquad.com" target="_blank" rel="noopener" class="btn btn-primary" style="font-size:.72rem; margin-top:.5rem;">JoySquad HQ ↗</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p class="footer-copy">© 2026 JoySquad Texas. Part of the JoySquad family.</p>
+  <div class="footer-right">
+    <a href="https://joysquad.com" target="_blank" rel="noopener" class="footer-link">joysquad.com ↗</a>
+    <a href="mailto:eshields@joysquad.com" class="footer-link">eshields@joysquad.com</a>
+    <a href="tel:4694441016" class="footer-link">(469) 444-1016</a>
+  </div>
+</footer>
+
+<script>
+  const cursor = document.getElementById('cursor');
+  document.addEventListener('mousemove', e => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top  = e.clientY + 'px';
+  });
+  document.querySelectorAll('a, button, input, select, textarea').forEach(el => {
+    el.addEventListener('mouseenter', () => cursor.classList.add('big'));
+    el.addEventListener('mouseleave', () => cursor.classList.remove('big'));
+  });
+
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const t = document.querySelector(a.getAttribute('href'));
+      if (t) t.scrollIntoView({ behavior:'smooth', block:'start' });
+    });
+  });
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    const fname   = document.getElementById('fname').value;
+    const lname   = document.getElementById('lname').value;
+    const email   = document.getElementById('email').value;
+    const phone   = document.getElementById('phone').value;
+    const type    = document.getElementById('event-type').value;
+    const date    = document.getElementById('event-date').value;
+    const service = document.getElementById('service').value;
+    const message = document.getElementById('message').value;
+    const subject = encodeURIComponent(`JoySquad Texas Inquiry — ${type || 'Event'} — ${fname} ${lname}`);
+    const body    = encodeURIComponent(`Name: ${fname} ${lname}\nEmail: ${email}\nPhone: ${phone}\n\nEvent Type: ${type}\nEvent Date: ${date}\nService: ${service}\n\nMessage:\n${message}`);
+    window.location.href = `mailto:eshields@joysquad.com?subject=${subject}&body=${body}`;
+    document.getElementById('form-note').textContent = '✓ Opening your email client...';
+    document.getElementById('submit-btn').textContent = 'Sent!';
+  }
+</script>
+</body>
+</html>
